@@ -60,7 +60,7 @@ void Personne::AjoutPerso()
 		return;
 	}
 	else {
-		cout << "Data Inserted successfully" << endl;
+		cout << "Data Inserted successfullyyy" << endl;
 	}
 
 	const char* sqlQueryData = "SELECT * FROM Personne;";
