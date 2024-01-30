@@ -127,12 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="E:\Downloads\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.c" />
+    <ClCompile Include="..\..\..\..\Documents\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.c" />
     <ClCompile Include="Personne.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E:\Downloads\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.h" />
+    <ClInclude Include="..\..\..\..\Documents\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.h" />
     <ClInclude Include="Personne.h" />
   </ItemGroup>
   <ItemGroup>
