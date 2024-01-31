@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Documents\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.c" />
     <ClCompile Include="Enseignant.cpp" />
     <ClCompile Include="Etudiant.cpp" />
     <ClCompile Include="Groupe.cpp" />
@@ -138,7 +137,6 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Documents\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.h" />
     <ClInclude Include="Enseignant.h" />
     <ClInclude Include="Etudiant.h" />
     <ClInclude Include="Groupe.h" />
@@ -148,7 +146,6 @@
     <ClInclude Include="Personne.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Documents\Projet 2.pdf" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

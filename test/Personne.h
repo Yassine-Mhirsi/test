@@ -28,12 +28,4 @@ public:
     void setPrenom(const string& _prenom) { Prenom = _prenom; }
     void setMail(const string& _mail) { Mail = _mail; }
 
-
-
-	void AjoutPerso();
-    void SaisirCoordonnees();
-    bool EnregistrerDansBaseDeDonnees();
-    void AfficherDonnees();
-    void SupprimerPersonne(int id);
-    void MiseAJourPersonne(int id, const string& newNom, const string& newPrenom, const string& newMail);
 };
