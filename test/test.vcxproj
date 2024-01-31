@@ -128,11 +128,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Documents\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.c" />
+    <ClCompile Include="Enseignant.cpp" />
+    <ClCompile Include="Etudiant.cpp" />
+    <ClCompile Include="Groupe.cpp" />
+    <ClCompile Include="GroupeModule.cpp" />
+    <ClCompile Include="Matiere.cpp" />
+    <ClCompile Include="Note.cpp" />
     <ClCompile Include="Personne.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Documents\sqlite-amalgamation-3450000\sqlite-amalgamation-3450000\sqlite3.h" />
+    <ClInclude Include="Enseignant.h" />
+    <ClInclude Include="Etudiant.h" />
+    <ClInclude Include="Groupe.h" />
+    <ClInclude Include="GroupeModule.h" />
+    <ClInclude Include="Matiere.h" />
+    <ClInclude Include="Note.h" />
     <ClInclude Include="Personne.h" />
   </ItemGroup>
   <ItemGroup>
