@@ -34,4 +34,6 @@ public:
     void SaisirCoordonnees();
     bool EnregistrerDansBaseDeDonnees();
     void AfficherDonnees();
+    void SupprimerPersonne(int id);
+    void MiseAJourPersonne(int id, const string& newNom, const string& newPrenom, const string& newMail);
 };

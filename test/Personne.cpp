@@ -107,4 +107,80 @@ void Personne::AfficherDonnees() {
 
     sqlite3_finalize(stmt);
     sqlite3_close(db);
+
+
 }
+
+void Personne::SupprimerPersonne(int id) {
+    sqlite3* db;
+    char* errMsg = nullptr;
+    int rc = sqlite3_open("example.db", &db);
+    if (rc) {
+        cerr << "Cannot open database: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    const char* sqlDeleteData = "DELETE FROM Personne WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, sqlDeleteData, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        cerr << "SQL error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+        sqlite3_close(db);
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    if (rc == SQLITE_DONE) {
+        cout << "Personne with ID " << id << " deleted successfully." << endl;
+    }
+    else {
+        cerr << "Failed to delete personne with ID " << id << "." << endl;
+    }
+}
+
+void Personne::MiseAJourPersonne(int id, const string& newNom, const string& newPrenom, const string& newMail) {
+    sqlite3* db;
+    char* errMsg = nullptr;
+    int rc = sqlite3_open("example.db", &db);
+    if (rc) {
+        cerr << "Cannot open database: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    const char* sqlUpdateData = "UPDATE Personne SET nom = ?, prenom = ?, mail = ? WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, sqlUpdateData, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        cerr << "SQL error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+        sqlite3_close(db);
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, newNom.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, newPrenom.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, newMail.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 4, id);
+
+    rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    if (rc == SQLITE_DONE) {
+        cout << "Personne with ID " << id << " updated successfully." << endl;
+    }
+    else {
+        cerr << "Failed to update personne with ID " << id << "." << endl;
+    }
+}
+
+
+
+
+
