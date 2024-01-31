@@ -9,84 +9,102 @@ Personne::Personne(const int& _id, const string& _nom, const string& _prenom, co
 
 
 Personne::~Personne() {}
-void Personne::AjoutPerso()
-{
-	cout << "Donner Nom : ";
-	getline(cin, Nom);
-	cout << "Donner Prenom : ";
-	getline(cin, Prenom);
-	cout << "Donner Mail : ";
-	getline(cin, Mail);
-	sqlite3* db;
-	char* errMsg = nullptr;
-	int rc = sqlite3_open("example.db", &db);
-	if (rc) {
-		std::cerr << "Cannot open database: " << sqlite3_errmsg(db) << std::endl;
-		return;
-	}
-	else {
-		std::cout << "Opened database successfully" << std::endl;
 
-		// Set UTF-8 encoding
-		sqlite3_exec(db, "PRAGMA encoding = 'UTF-8';", nullptr, nullptr, nullptr);
-	}
+void Personne::AjoutPerso() {
+    SaisirCoordonnees();
+    if (EnregistrerDansBaseDeDonnees()) {
+        AfficherDonnees();
+    }
+}
 
-	const char* sqlCreateTable = "CREATE TABLE IF NOT EXISTS Personne ("
-		"id INTEGER PRIMARY KEY AUTOINCREMENT,"
-		"nom TEXT NOT NULL COLLATE NOCASE,"
-		"prenom TEXT NOT NULL COLLATE NOCASE,"
-		"mail TEXT NOT NULL COLLATE NOCASE);";
-	rc = sqlite3_exec(db, sqlCreateTable, nullptr, nullptr, &errMsg);
-	if (rc != SQLITE_OK) {
-		std::cerr << "SQL error: " << errMsg << std::endl;
-		sqlite3_free(errMsg);
-		sqlite3_close(db);
-		return;
-	}
-	else {
-		cout << "Table created successfully" << endl;
-	}
-	const char* sqlInsertData = "INSERT INTO Personne (nom, prenom, mail) VALUES ('%s','%s','%s');";
-	char sql[100];  // Assuming a maximum length for the SQL query
+void Personne::SaisirCoordonnees() {
+    cout << "Donner Nom : ";
+    getline(cin, Nom);
 
-	// Format the SQL query with variables
-	snprintf(sql, sizeof(sql), sqlInsertData, Nom.c_str(), Prenom.c_str(), Mail.c_str());
+    cout << "Donner Prenom : ";
+    getline(cin, Prenom);
 
-	rc = sqlite3_exec(db, sql, nullptr, nullptr, &errMsg);
-	if (rc != SQLITE_OK) {
-		std::cerr << "SQL error: " << errMsg << std::endl;
-		sqlite3_free(errMsg);
-		sqlite3_close(db);
-		return;
-	}
-	else {
-		cout << "Data Inserted successfullyyy" << endl;
-	}
+    cout << "Donner Mail : ";
+    getline(cin, Mail);
+}
 
-	const char* sqlQueryData = "SELECT * FROM Personne;";
-	sqlite3_stmt* stmt;
+bool Personne::EnregistrerDansBaseDeDonnees() {
+    sqlite3* db;
+    char* errMsg = nullptr;
+    int rc = sqlite3_open("example.db", &db);
+    if (rc) {
+        cerr << "Cannot open database: " << sqlite3_errmsg(db) << endl;
+        return false;
+    }
 
-	rc = sqlite3_prepare_v2(db, sqlQueryData, -1, &stmt, nullptr);
-	if (rc != SQLITE_OK) {
-		std::cerr << "SQL error: " << errMsg << std::endl;
-		sqlite3_free(errMsg);
-		sqlite3_close(db);
-		return;
-	}
+    // Set UTF-8 encoding
+    sqlite3_exec(db, "PRAGMA encoding = 'UTF-8';", nullptr, nullptr, nullptr);
 
-	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		int id = sqlite3_column_int(stmt, 0);
-		const unsigned char* name = sqlite3_column_text(stmt, 1);
-		const unsigned char* prenom = sqlite3_column_text(stmt, 2);
-		const unsigned char* mail = sqlite3_column_text(stmt, 3);
+    const char* sqlCreateTable = "CREATE TABLE IF NOT EXISTS Personne ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "nom TEXT NOT NULL COLLATE NOCASE,"
+        "prenom TEXT NOT NULL COLLATE NOCASE,"
+        "mail TEXT NOT NULL COLLATE NOCASE);";
+    rc = sqlite3_exec(db, sqlCreateTable, nullptr, nullptr, &errMsg);
+    if (rc != SQLITE_OK) {
+        cerr << "SQL error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+        sqlite3_close(db);
+        return false;
+    }
 
-		// Check if values are not NULL before printing
-		std::cout << "ID: " << id << ", Nom: " << (name ? reinterpret_cast<const char*>(name) : "NULL")
-			<< ", Prenom: " << (prenom ? reinterpret_cast<const char*>(prenom) : "NULL")
-			<< ", Mail: " << (mail ? reinterpret_cast<const char*>(mail) : "NULL") << std::endl;
-	}
+    const char* sqlInsertData = "INSERT INTO Personne (nom, prenom, mail) VALUES (?, ?, ?);";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, sqlInsertData, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        cerr << "SQL error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+        sqlite3_close(db);
+        return false;
+    }
 
+    sqlite3_bind_text(stmt, 1, Nom.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, Prenom.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, Mail.c_str(), -1, SQLITE_STATIC);
 
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-};
+    rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return (rc == SQLITE_DONE);
+}
+
+void Personne::AfficherDonnees() {
+    sqlite3* db;
+    char* errMsg = nullptr;
+    int rc = sqlite3_open("example.db", &db);
+    if (rc) {
+        cerr << "Cannot open database: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    const char* sqlQueryData = "SELECT * FROM Personne;";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, sqlQueryData, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        cerr << "SQL error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+        sqlite3_close(db);
+        return;
+    }
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char* name = sqlite3_column_text(stmt, 1);
+        const unsigned char* prenom = sqlite3_column_text(stmt, 2);
+        const unsigned char* mail = sqlite3_column_text(stmt, 3);
+
+        // Check if values are not NULL before printing
+        cout << "ID: " << id << ", Nom: " << (name ? reinterpret_cast<const char*>(name) : "NULL")
+            << ", Prenom: " << (prenom ? reinterpret_cast<const char*>(prenom) : "NULL")
+            << ", Mail: " << (mail ? reinterpret_cast<const char*>(mail) : "NULL") << endl;
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+}

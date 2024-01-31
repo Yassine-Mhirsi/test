@@ -136,6 +136,7 @@
     <ClInclude Include="Personne.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Documents\Projet 2.pdf" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

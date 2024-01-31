@@ -35,5 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\..\..\..\Documents\Projet 2.pdf">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
