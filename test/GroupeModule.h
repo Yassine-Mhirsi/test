@@ -1,20 +1,22 @@
+#ifndef GROUPEMODULE_H
+#define GROUPEMODULE_H
+
 #pragma once
-#include "Matiere.h"
 #include <iostream>
-#include <vector>
+#include <string>
+#include "Matiere.h"
 
 using namespace std;
 class GroupeModule
 {
-    string IdGM;
-    string NomGM;
-    float CoefGM;
-    vector<Matiere> ListeMat;
+	string IdGM;
+	string NomGM;
+	float CoefGM;
+	vector<Matiere> ListeMat;
 
 public:
-    // Constructeur par défaut
-    GroupeModule() : IdGM(""), NomGM(""), CoefGM(0), ListeMat() {};
-    GroupeModule(const string& _id, const string& _nom, float& _coef);
-
-    void AjouterMatiere(const Matiere& m);
+	GroupeModule();
+	GroupeModule(string, string, float, vector<Matiere>);
 };
+
+#endif

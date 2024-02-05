@@ -1,11 +1,9 @@
+#pragma once
 #include <iostream>
-#include <sqlite3.h>
-#include <string>
-#include "Personne.h"
+#include "Data.h"
 
 int main()
 {
-	Personne P1;
-
+	cout << "hello world!";
 	return 0;
 }

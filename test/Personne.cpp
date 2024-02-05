@@ -1,16 +1,4 @@
 #include "Personne.h"
-#include <sqlite3.h>
-#include <string>
 
-Personne::Personne() : Id(-1), Nom(""), Prenom(""), Mail("") {};
-
-Personne::Personne(const int& _id, const string& _nom, const string& _prenom, const string& _mail)
-	: Id(_id), Nom(_nom), Prenom(_prenom), Mail(_mail) {}
-
-
-Personne::~Personne() {}
-
-
-
-
-
+Personne::Personne() : Id(0), Nom(""), Prenom(""), Mail("") {}
+Personne::Personne(int id, string nom, string prenom, string mail) :Id(id), Nom(nom), Prenom(prenom), Mail(mail) {}

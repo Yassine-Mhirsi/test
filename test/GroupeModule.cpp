@@ -1,9 +1,6 @@
 #include "GroupeModule.h"
 
-GroupeModule::GroupeModule(const string& _id, const string& _nom, float& _coef)
-{
-}
 
-void GroupeModule::AjouterMatiere(const Matiere& m)
-{
-}
+GroupeModule::GroupeModule() : IdGM(""), NomGM(""), CoefGM(0), ListeMat() {};
+GroupeModule::GroupeModule(string id, string nom, float coef, vector<Matiere> matiere)
+	: IdGM(id), NomGM(nom), CoefGM(coef), ListeMat(matiere) {}

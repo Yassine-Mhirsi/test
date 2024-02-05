@@ -1,18 +1,24 @@
 #pragma once
+#include <iostream>
 #include "Matiere.h"
 #include "Etudiant.h"
-#include <iostream>
+
 using namespace std;
 
 class Note
 {
-    Matiere Mat;
-    Etudiant Etu;
-    float note;
-    string type;
+	Matiere Mat;
+	Etudiant Etu;
+	float note;
+	string type;
 
 public:
-    // Constructeur par defaut
-    Note() : Mat(), Etu(), note(0), type("") {};
-    void setNote(float n) { note = n; }
+
+	Note();
+	Note(Matiere, Etudiant, float, string);
+	float MoyMat(vector<Note>& notes);
+	//float MoyGM(const vector<Note>& notes);
+
 };
+
+
